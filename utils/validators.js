@@ -97,19 +97,15 @@ export function validateTemperature(temp) {
 }
 
 /**
- * Sanitiza string para UI (escapa caracteres especiales)
+ * Normaliza texto para UI sin codificar entidades HTML.
+ * React ya escapa texto renderizado, por lo que aqui solo
+ * eliminamos caracteres de control y limitamos longitud.
  * @param {string} str
  * @returns {string}
  */
 export function sanitizeString(str) {
   if (typeof str !== "string") return "";
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#x27;")
-    .slice(0, 150); // Límite extra de seguridad
+  return str.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").slice(0, 150);
 }
 
 /**

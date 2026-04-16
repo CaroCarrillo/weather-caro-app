@@ -129,6 +129,7 @@ export default function App() {
 
         <form className="form" onSubmit={handleSubmit}>
           <input
+            className="city-input"
             value={city}
             onChange={handleInputChange}
             placeholder="Ciudad y país"

@@ -345,6 +345,25 @@ describe("Weather App - Pruebas Funcionales", () => {
     });
   });
 
+  test("debe mostrar comillas normales en errores sin renderizar entidades HTML", async () => {
+    fetch.mockRejectedValueOnce(new Error('No se encontro ninguna ciudad con ese nombre: "tlakepaque".'));
+
+    render(<App />);
+
+    const input = screen.getByPlaceholderText("Ciudad y país");
+    const button = screen.getByText("Consultar");
+
+    await userEvent.clear(input);
+    await userEvent.type(input, "tlakepaque");
+    await userEvent.click(button);
+
+    await waitFor(() => {
+      expect(screen.getByText(/"tlakepaque"/i)).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(/&quot;/i)).not.toBeInTheDocument();
+  });
+
   // ============ ESTADOS DE LOADING ============
 
   test("debe mostrar 'Consultando...' mientras se cargan los datos", async () => {
