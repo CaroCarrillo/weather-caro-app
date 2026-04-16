@@ -32,8 +32,8 @@ export function validateCityQuery(query) {
     };
   }
 
-  // Solo permitir: letras, números, espacios, comas, guiones
-  if (!/^[a-zA-Z0-9\s,\-áéíóúñ]*$/i.test(trimmed)) {
+  // Permitir caracteres comunes en nombres de ciudades internacionales.
+  if (!/^[a-zA-Z0-9\s,.'()\-áéíóúüñÁÉÍÓÚÜÑ]*$/i.test(trimmed)) {
     return { valid: false, error: "Caracteres no permitidos.", sanitized: "" };
   }
 
